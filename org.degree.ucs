@@ -1,0 +1,82 @@
+
+namespace org.degree.ucsd
+
+// Concepts
+concept Address {
+    o String street
+    o String house
+    o String city
+    o String county
+    o String country
+    o String zip
+}
+
+// Participants
+participant Member identified by email {
+    o String email
+    o String firstName optional
+    o String lastName optional
+    o DateTime dob optional
+    o Address address optional
+    o String[] authorized optional
+}
+
+participant University identified by shortName {
+  o String shortName
+}
+
+participant Business identified by name {
+  o String name
+}
+
+// Transactions
+//  Member
+abstract transaction MemberTransaction {
+    o String memberId
+    --> Member member
+}
+
+transaction AuthorizeAccess extends MemberTransaction {
+}
+
+transaction RevokeAccess extends MemberTransaction {
+}
+
+//  Degree
+abstract transaction DegreeTransaction {
+  o String memberId
+}
+
+transaction AuthorizeDegreeAccess extends DegreeTransaction {
+  o String [] degreeIds 
+}
+
+transaction RevokeDegreeAccess extends DegreeTransaction {
+  o String [] degreeIds 
+}
+
+// Assets
+asset Degree identified by degreeId {
+    o String degreeId
+    o String memberId
+    o String Owner
+    o String DegreeType
+    o String DegreeStatus
+    o String Major
+    o String Major2
+    o String Minor
+    o String Minor2
+    o String gpa
+    o String StartYear
+    o String GradYear
+    o String[] authorized optional
+}
+
+// Events
+event MemberEvent {
+    o MemberTransaction memberTransaction
+}
+
+event DegreeEvent {
+  o DegreeTransaction degreeTransaction
+}

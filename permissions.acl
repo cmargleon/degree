@@ -1,0 +1,131 @@
+
+
+rule AuthorizeAccessTransaction {
+    description: "Allow all participants to submit AuthorizeAccess transactions"
+    participant: "ANY"
+    operation: CREATE
+    resource: "org.degree.ucsd.AuthorizeAccess"
+    action: ALLOW
+}
+
+rule RevokeAccessTransaction {
+    description: "Allow all participants to submit RevokeAccess transactions"
+    participant: "ANY"
+    operation: CREATE
+    resource: "org.degree.ucsd.RevokeAccess"
+    action: ALLOW
+}
+
+rule AuthorizeDegreeTransaction {
+    description: "Allow all participants to submit AuthorizeDegree transactions"
+    participant: "ANY"
+    operation: CREATE
+    resource: "org.degree.ucsd.AuthorizeDegreeAccess"
+    action: ALLOW
+}
+
+rule RevokeDegreeTransaction {
+    description: "Allow all participants to submit RevokeDegree transactions"
+    participant: "ANY"
+    operation: CREATE
+    resource: "org.degree.ucsd.RevokeDegreeAccess"
+    action: ALLOW
+}
+
+rule OwnRecordFullAccessGraduate {
+    description: "Allow all participants full access to their own record"
+    participant(p): "org.degree.ucsd.Graduate"
+    operation: ALL
+    resource(r): "org.degree.ucsd.Graduate"
+    condition: (r.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule OwnRecordFullAccessUniversities {
+    description: "Allow all participants full access to their own record"
+    participant(p): "org.degree.ucsd.University"
+    operation: ALL
+    resource(r): "org.degree.ucsd.University"
+    condition: (r.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule OwnRecordFullAccessBusiness {
+    description: "Allow all participants full access to their own record"
+    participant(p): "org.degree.ucsd.Business"
+    operation: ALL
+    resource(r): "org.degree.ucsd.Business"
+    condition: (r.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule OwnDegreeUpdateWithTx {
+    description: "Allow update to authorize element of degree for own degree asset via DegreeTransaction"
+    participant(p): "org.degree.ucsd.Graduate"
+    operation: UPDATE
+    resource(r): "org.degree.ucsd.Degree"
+    transaction (tx): "org.degree.ucsd.DegreeTransaction"
+    condition: (r.Owner === p.getIdentifier())
+    action: ALLOW
+}
+
+rule OwnDegreeReadAccess {
+    description: "Allow all participants read access only to their own degree assets"
+    participant(p): "org.degree.ucsd.Graduate"
+    operation: READ
+    resource(r): "org.degree.ucsd.Degree"
+    condition: (r.Owner === p.getIdentifier())
+    action: ALLOW
+}
+
+rule ForeignRecordConditionalAccess {
+    description: "Allow participants access to other people's records if granted"
+    participant(p): "org.degree.ucsd.Graduate"
+    operation: READ
+    resource(r): "org.degree.ucsd.Graduate"
+    condition: (r.authorized && r.authorized.indexOf(p.getIdentifier()) > -1)
+    action: ALLOW
+}
+
+rule ForeignDegreeConditionalAccess {
+    description: "Hope this works"
+    participant (p): "org.degree.ucsd.Graduate"
+    operation: READ
+    resource(r): "org.degree.ucsd.Degree"
+    condition: (r.authorized && r.authorized.indexOf(p.getIdentifier()) > -1)
+    action: ALLOW
+}
+
+//PRIMERA REGLA PROPIA
+
+rule CreateDegree {
+  description: "Allow universities to create degrees"
+  participant: "org.degree.ucsd.University"
+  operation: ALL
+  resource: "org.degree.ucsd.Degree"
+  action: ALLOW
+}
+
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}

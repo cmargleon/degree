@@ -1,0 +1,6 @@
+query getDegreeByGraduateRut {
+  description: "Get degree by graduate rut"
+  statement:
+    SELECT org.degree.ucsd.Degree
+      WHERE (graduateRut == _$graduateRut)
+}
