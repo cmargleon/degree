@@ -3,7 +3,7 @@
     "composer": "^0.19.6"
   },
   "name": "degree",
-  "version": "0.2.7",
+  "version": "0.2.9",
   "description": "degree",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/degree.bna",

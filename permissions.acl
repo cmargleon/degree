@@ -41,6 +41,15 @@ rule OwnRecordFullAccessGraduate {
     action: ALLOW
 }
 
+rule testUniversityCreatedRecord {
+  description: "dssd"
+  participant(p): "org.degree.ucsd.University"
+  operation: ALL
+  resource(r): "org.degree.ucsd.Degree"
+  condition: (r.university !== p.getIdentifier())
+  action: DENY
+}
+
 rule OwnRecordFullAccessUniversities {
     description: "Allow all participants full access to their own record"
     participant(p): "org.degree.ucsd.University"
@@ -48,7 +57,8 @@ rule OwnRecordFullAccessUniversities {
     resource(r): "org.degree.ucsd.University"
     condition: (r.getIdentifier() === p.getIdentifier())
     action: ALLOW
-}
+} 
+
 
 rule OwnRecordFullAccessBusiness {
     description: "Allow all participants full access to their own record"
