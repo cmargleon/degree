@@ -40,7 +40,7 @@ rule OwnRecordFullAccessGraduate {
     condition: (r.getIdentifier() === p.getIdentifier())
     action: ALLOW
 }
-
+/*
 rule testUniversityCreatedRecord {
   description: "dssd"
   participant(p): "org.degree.ucsd.University"
@@ -49,7 +49,7 @@ rule testUniversityCreatedRecord {
   condition: (r.university !== p.getIdentifier())
   action: DENY
 }
-
+*/
 rule OwnRecordFullAccessUniversities {
     description: "Allow all participants full access to their own record"
     participant(p): "org.degree.ucsd.University"
