@@ -11,7 +11,6 @@ participant Graduate identified by graduateRut {
     o String firstName optional
     o String lastName optional
     o String phoneNumber optional
-    o String[] authorized optional
 }
 
 participant University identified by universityRut {
@@ -68,6 +67,7 @@ asset Degree identified by degreeId {
     o String gpa
     o String startYear
     o String gradYear
+    o String university
     o String[] authorized optional
 }
 

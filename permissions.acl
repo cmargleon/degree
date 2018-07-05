@@ -65,7 +65,7 @@ rule OwnDegreeUpdateWithTx {
     operation: UPDATE
     resource(r): "org.degree.ucsd.Degree"
     transaction (tx): "org.degree.ucsd.DegreeTransaction"
-    condition: (r.Owner === p.getIdentifier())
+    condition: (r.owner === p.getIdentifier())
     action: ALLOW
 }
 
@@ -74,7 +74,7 @@ rule OwnDegreeReadAccess {
     participant(p): "org.degree.ucsd.Graduate"
     operation: READ
     resource(r): "org.degree.ucsd.Degree"
-    condition: (r.Owner === p.getIdentifier())
+    condition: (r.owner === p.getIdentifier())
     action: ALLOW
 }
 
