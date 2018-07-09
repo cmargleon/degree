@@ -4,3 +4,9 @@ query getDegreeByGraduateRut {
     SELECT org.degree.ucsd.Degree
       WHERE (graduateRut == _$graduateRut)
 }
+
+query getAllDegrees {
+  description: "Get all degrees"
+  statement:
+    SELECT org.degree.ucsd.Degree
+}
