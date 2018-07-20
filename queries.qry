@@ -10,3 +10,10 @@ query getAllDegrees {
   statement:
     SELECT org.degree.ucsd.Degree
 }
+
+query getDegreeById {
+  description: "Get degrees by Id"
+  statement:
+    SELECT org.degree.ucsd.Degree
+      WHERE (degreeId == _$degreeId)
+}
